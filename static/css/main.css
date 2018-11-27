@@ -1,0 +1,34 @@
+/* GENERAL */
+body {
+    margin: 0;
+    background: #FFF;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    background: rgba(235, 237, 239, 0.2);
+    width: 100%;
+}
+
+.navbar-list li{
+    display: inline-block;
+    margin-right: 25px;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.navbar-list li:hover {
+    background: rgba(230, 230, 230, 0.1);
+}
+
+.navbar-list a {
+    color: white;
+    text-decoration: none;
+}
+
+/* PORTADA */
+.img-portada {
+    width: 100%;
+}
