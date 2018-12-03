@@ -11,21 +11,41 @@ body {
     background: rgba(235, 237, 239, 0.2);
     width: 100%;
 }
+.navbar-title {
+    display: inline-block;
+    margin: 15px 0 0 40px;
+    color: white;
+}
+
+.navbar-title span {
+    color: black;
+    background: #CC3300;
+    padding: 15px;
+
+}
+
+.navbar-list {
+    margin: 0;
+    padding: 0;
+    float: right;
+    display: inline-block;
+}
 
 .navbar-list li{
     display: inline-block;
     margin-right: 25px;
-    padding: 8px;
-    border-radius: 8px;
 }
 
-.navbar-list li:hover {
-    background: rgba(230, 230, 230, 0.1);
+.navbar-list a:hover {
+    background: rgba(231, 195, 50, 0.7);
+    color: black;
 }
 
 .navbar-list a {
     color: white;
     text-decoration: none;
+    padding: 21px;
+    display: block;
 }
 
 /* PORTADA */
