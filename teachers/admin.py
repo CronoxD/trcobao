@@ -3,7 +3,7 @@
 from django.contrib import admin
 
 # Locals
-from Teachers.models import Teacher
+from teachers.models import Teacher
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):

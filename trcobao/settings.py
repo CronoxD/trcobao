@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     # LOCAL
     'pages',
-    'Teachers',
+    'teachers',
+    'students',
 ]
 
 MIDDLEWARE = [

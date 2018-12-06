@@ -12,7 +12,7 @@ class Teacher(models.Model):
 
     phone_number = models.CharField(max_length=20, blank=True)
 
-    avatar = models.ImageField(upload_to='Teachers/avatars', blank=True, null=True)
+    avatar = models.ImageField(upload_to='teachers/avatars', blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
