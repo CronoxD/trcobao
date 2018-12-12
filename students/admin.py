@@ -1,3 +1,11 @@
+
+# Django
 from django.contrib import admin
 
-# Register your models here.
+# Models
+from students.models import Student
+
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+
+    list_display = ('user', 'status')

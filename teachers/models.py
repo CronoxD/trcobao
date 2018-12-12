@@ -14,8 +14,21 @@ class Teacher(models.Model):
 
     avatar = models.ImageField(upload_to='teachers/avatars', blank=True, null=True)
 
+    is_verified = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
+
+    # GetFunctions
+
+    def first_name(self):
+        return self.user.first_name
+
+    def last_name(self):
+        return self.user.last_name
+
+    def is_staff(self):
+        return self.user.is_staff

@@ -9,16 +9,36 @@
 
     <div class="content-portada">
         <img class="img-portada" src="{% static 'img/portada2.jpg' %}" alt="imagen de portada">
-        <form method="POST" class="form-group">
+        <form method="POST" class="form-group background-white">
             {% csrf_token %}
 
             <label for="email">Correo electrónico</label>
-            <input type="email" name="email" id="email">
+            <input
+                type="text"
+                name="email"
+                id="email"
+                class="{% if form.email.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.email.errors %}
+                <p style="color:red; text-align:center;">
+                    {{error}}
+                </p> 
+            {% endfor %}
 
             <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password">
-
+            <input
+                type="password"
+                name="password"
+                id="password"
+                class="{% if form.password.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.password.errors %}
+                <p style="color:red; text-align:center;">
+                    {{error}}
+                </p>
+            {% endfor %}
             <button type="submit"> Entrar </button>
+            
             {% if message %}
             <p class="form-message-error">{{ message }}</p>
             {% endif %}

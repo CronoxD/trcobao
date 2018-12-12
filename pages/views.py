@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-# Create your views here.
+# Forms
+from pages.forms import LoginForm, registerForm
 
 def home(request):
     return render(request, 'pages/home.html')
@@ -13,20 +14,34 @@ def home(request):
 def login_v(request):
 
     if request.method == 'POST':
+    
+        form = LoginForm(data=request.POST)
         
-        email = request.POST['email']
-        password = request.POST['password']
-        user = User.objects.filter(email=email)[0]
-
-        if user is not None:
+        if form.is_valid():
+            
+            email = request.POST['email']
+            password = request.POST['password']
+            
             # Continue login..
-            user = authenticate(request, username=user.username, password=password)
+            user = authenticate(request, username=email, password=password)
 
             if user is not None:
                 login(request, user)
                 return redirect('pages:home')
             else:
                 return render(request, 'pages/login.html', {'message' : 'Usuario o contraseña incorrectos'})
-                
-
+        else:
+            return render(request, 'pages/login.html', {'form': form})
     return render(request, 'pages/login.html')
+
+def signup_v(request):
+
+    if request.method == 'POST':
+
+        form = registerForm(request.POST)
+        if form.is_valid():
+            return redirect('pages:login')
+        else:
+            return render(request, 'pages/signup.html', { 'form' : form})
+
+    return render(request, 'pages/signup.html')

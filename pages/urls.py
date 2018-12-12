@@ -17,9 +17,15 @@ urlpatterns = [
     ),
 
     path(
-        route='ingresar',
+        route='ingresar/',
         view=views.login_v,
         name='login'
+    ),
+
+    path(
+        route='registrarse',
+        view=views.signup_v,
+        name='signup'
     )
 
 ]

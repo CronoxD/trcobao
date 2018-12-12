@@ -1,0 +1,109 @@
+{% extends 'app.html'%}
+
+{% block head_content %}
+    <title>Registrarse</title>
+{% endblock %}
+{% load static%}
+{% block content %}
+
+    <div class="content-portada">
+        <img class="img-portada" src="{% static 'img/portada3.jpg' %}" alt="imagen de portada">
+        <form method="POST" class="form-group background-gray">
+            {% csrf_token %}
+
+            <label for="first_name">Nombre</label>
+            <input
+                type="text"
+                name="first_name"
+                id="first_name"
+                value="{{ form.first_name.value }}"
+                class="{% if form.first_name.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.first_name.errors %}
+                <p class="form-message-error">
+                    {{error}}
+                </p> 
+            {% endfor %}
+
+            <label for="last_name">Apellido Paterno</label>
+            <input
+                type="text"
+                name="last_name"
+                id="last_name"
+                value="{{ form.last_name.value }}"
+                class="{% if form.last_name.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.last_name.errors %}
+                <p class="form-message-error">
+                    {{error}}
+                </p> 
+            {% endfor %}
+
+            <label for="middle_name">Apellido Materno</label>
+            <input
+                type="text"
+                name="middle_name"
+                id="middle_name"
+                value="{{ form.middle_name.value }}"
+                class="{% if form.middle_name.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.middle_name.errors %}
+                <p class="form-message-error">
+                    {{error}}
+                </p> 
+            {% endfor %}
+
+            <label for="email">Correo electrónico</label>
+            <input
+                type="text"
+                name="email"
+                id="email"
+                value="{{ form.email.value }}"
+                class="{% if form.email.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.email.errors %}
+                <p class="form-message-error">
+                    {{error}}
+                </p> 
+            {% endfor %}
+
+            <label for="password">Contraseña</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                class="{% if form.password.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.password.errors %}
+                <p class="form-message-error">
+                    {{error}}
+                </p>
+            {% endfor %}
+
+            <label for="password_confirmation">Confirmar contraseña</label>
+            <input
+                type="password"
+                name="password_confirmation"
+                id="password_confirmation"
+                class="{% if form.password.errors %} shadow-error {% endif %}"
+                >
+            {% for error in form.password_confirmation.errors %}
+                <p class="form-message-error">
+                    {{error}}
+                </p>
+            {% endfor %}
+
+            <div class="form-checkbox-content">
+                <input id="is_teacher" style="width: 30px;" type="checkbox" name="is_teacher" value="True">
+                <label for="is_teacher">Soy un maestro</label>
+            </div>
+
+            <button type="submit"> Entrar </button>
+            
+            {% if message %}
+            <p class="form-message-error">{{ message }}</p>
+            {% endif %}
+        </form>
+    </div>
+
+{% endblock %}
