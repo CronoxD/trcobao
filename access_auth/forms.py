@@ -47,8 +47,15 @@ class registerForm(forms.Form):
                 msg = forms.ValidationError('No coinciden las contraseñas ')
                 self.add_error('password', msg)
 
-        else:
-            return data
+        # Check email is unique
+        exist_user = User.objects.get(email=data['email'])
+        if exist_user:
+            msg = forms.ValidationError('Ya existe un usuario con éste email')
+            self.add_error('email', msg)
+
+        print('El usuario encontrado es: {}'.format(exist_user))
+        
+        return data
 
     def save(self):
         """ Save an user like teacher or student"""
