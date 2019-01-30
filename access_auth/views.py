@@ -4,10 +4,12 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 # Forms
-from pages.forms import LoginForm, registerForm
+from access_auth.forms import LoginForm, registerForm
 
+@login_required()
 def home(request):
     return render(request, 'pages/home.html')
 
@@ -27,7 +29,7 @@ def login_v(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('pages:home')
+                return redirect('access_auth:home')
             else:
                 return render(request, 'pages/login.html', {'message' : 'Usuario o contraseña incorrectos'})
         else:

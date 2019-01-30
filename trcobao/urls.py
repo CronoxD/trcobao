@@ -8,6 +8,6 @@ from django.conf import settings
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('', include(('pages.urls', 'pages'), namespace='pages')),
+    path('', include(('access_auth.urls', 'access_auth'), namespace='access_auth')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

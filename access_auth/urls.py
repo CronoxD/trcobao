@@ -1,12 +1,12 @@
 
 
-""" Pages Urls"""
+""" Auth Urls"""
 
 # Django
 from django.urls import path
 
 # Local
-from pages import views
+from access_auth import views
 
 urlpatterns = [
 

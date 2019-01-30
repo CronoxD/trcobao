@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # LOCAL
-    'pages',
+    'access_auth',
     'teachers',
     'students',
 ]
@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -137,3 +137,5 @@ MEDIA_URL = '/media/'
 AUTHENTICATION_BACKENDS = [
     'trcobao.backends.EmailAuthBackend'
 ]
+
+LOGIN_URL = 'access_auth:login'
