@@ -5,6 +5,8 @@ from django import forms
 
 # Models
 from django.contrib.auth.models import User
+from teachers.models import Teacher
+from students.models import Student
 
 class LoginForm(forms.Form):
     """Form to validate login (email)"""
@@ -22,7 +24,6 @@ class registerForm(forms.Form):
 
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
-    middle_name = forms.CharField(max_length=30)
 
     email = forms.EmailField(
         min_length=5,
@@ -48,17 +49,34 @@ class registerForm(forms.Form):
                 self.add_error('password', msg)
 
         # Check email is unique
-        exist_user = User.objects.get(email=data['email'])
-        if exist_user:
-            msg = forms.ValidationError('Ya existe un usuario con éste email')
-            self.add_error('email', msg)
+        if 'email' in data:
+            try:
+                exist_user = User.objects.get(email=data['email'])
+                msg = forms.ValidationError('Ya existe un usuario con este email')
+                self.add_error('email', msg)
+            except User.DoesNotExist:
+                return data
 
-        print('El usuario encontrado es: {}'.format(exist_user))
-        
-        return data
+    
 
     def save(self):
         """ Save an user like teacher or student"""
 
         data = self.cleaned_data
+        
+        data.pop('password_confirmation')
 
+        is_teacher = data['is_teacher']
+        data.pop('is_teacher')
+
+        # Crear el username
+        data['username'] = data['first_name'][:3] + data['last_name']
+        
+        user = User.objects.create(**data)
+
+        if is_teacher:
+            teacher = Teacher(user=user)
+            teacher.save()
+        else:
+            student = Student(user=user)
+            student.save()

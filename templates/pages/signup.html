@@ -11,7 +11,7 @@
         <form method="POST" class="form-group background-gray">
             {% csrf_token %}
 
-            <label for="first_name">Nombre</label>
+            <label for="first_name">Nombre(s)</label>
             <input
                 type="text"
                 name="first_name"
@@ -25,7 +25,7 @@
                 </p> 
             {% endfor %}
 
-            <label for="last_name">Apellido Paterno</label>
+            <label for="last_name">Apellidos</label>
             <input
                 type="text"
                 name="last_name"
@@ -34,20 +34,6 @@
                 class="{% if form.last_name.errors %} shadow-error {% endif %}"
                 >
             {% for error in form.last_name.errors %}
-                <p class="form-message-error">
-                    {{error}}
-                </p> 
-            {% endfor %}
-
-            <label for="middle_name">Apellido Materno</label>
-            <input
-                type="text"
-                name="middle_name"
-                id="middle_name"
-                value="{{ form.middle_name.value }}"
-                class="{% if form.middle_name.errors %} shadow-error {% endif %}"
-                >
-            {% for error in form.middle_name.errors %}
                 <p class="form-message-error">
                     {{error}}
                 </p> 

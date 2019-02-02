@@ -42,6 +42,7 @@ def signup_v(request):
 
         form = registerForm(request.POST)
         if form.is_valid():
+            form.save()
             return redirect('access_auth:login')
         else:
             return render(request, 'pages/signup.html', { 'form' : form})
