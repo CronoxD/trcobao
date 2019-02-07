@@ -8,6 +8,10 @@ from django.contrib.auth.models import User
 from teachers.models import Teacher
 from students.models import Student
 
+# Utils
+from random import randrange
+
+
 class LoginForm(forms.Form):
     """Form to validate login (email)"""
 
@@ -70,9 +74,13 @@ class registerForm(forms.Form):
         data.pop('is_teacher')
 
         # Crear el username
-        data['username'] = data['first_name'][:3] + data['last_name']
+        data['username'] = data['first_name'][:1] + data['last_name'].split(' ')[0]
+        data['username'] = data['username'].upper()
+
+        while User.objects.filter(username=data['username']).exists():
+            data['username'] = data['username'] + str(randrange(1000,9999))
         
-        user = User.objects.create(**data)
+        user = User.objects.create_user(**data)
 
         if is_teacher:
             teacher = Teacher(user=user)
