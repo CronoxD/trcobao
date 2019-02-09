@@ -3,7 +3,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 # Forms
@@ -11,7 +11,10 @@ from access_auth.forms import LoginForm, registerForm
 
 @login_required()
 def home(request):
-    return render(request, 'pages/home.html')
+    if(request.user.teacher):
+        return redirect('/maestros')
+    else:
+        return render(request, 'pages/home.html')
 
 def login_v(request):
 
@@ -48,3 +51,7 @@ def signup_v(request):
             return render(request, 'pages/signup.html', { 'form' : form})
 
     return render(request, 'pages/signup.html')
+
+def logout_v(request):
+    logout(request)
+    return redirect('access_auth:home')

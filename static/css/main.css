@@ -1,7 +1,7 @@
 /* GENERAL */
 body {
     margin: 0;
-    background: #FFF;
+    background: #EEE;
     font-family: 'Noto Sans TC', sans-serif;
 }
 .background-white {
@@ -74,13 +74,53 @@ body {
     right: 0;
     z-index: -10;
 }
-
+/* TEACHERS*/
 .content-portada {
     position: relative;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.content {
+    margin: 106px 8% 0;
+}
+
+.content-title{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.content-title .btn-success {
+    margin-left: 25px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: white;
+    margin: 40px 0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.subtitle {
+    font-size: 20px;
+}
+
+.btn-success {
+    border: none;
+    padding: 10px;
+    border-radius: 9px;
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    cursor: pointer;
+}
+
+.btn-success:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* FORMS */

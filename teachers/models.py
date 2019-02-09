@@ -1,4 +1,8 @@
+
+# Django
 from django.db import models
+
+# Models
 from django.contrib.auth.models import User
 
 # Teacher model
@@ -32,3 +36,7 @@ class Teacher(models.Model):
 
     def is_staff(self):
         return self.user.is_staff
+
+    #def course(self):
+    #    courses = Course.object.filter(teacher_id = self.user.id)
+    #    return courses

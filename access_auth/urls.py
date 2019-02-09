@@ -23,9 +23,15 @@ urlpatterns = [
     ),
 
     path(
-        route='registrarse',
+        route='registrarse/',
         view=views.signup_v,
         name='signup'
+    ),
+
+    path(
+        route='logout/',
+        view=views.logout_v,
+        name='logout'
     )
 
 ]
