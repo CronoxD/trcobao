@@ -1,18 +1,14 @@
-
-# Django
 from django.db import models
-
-# Models
 from teachers.models import Teacher
-from activities.models import Activity
 
-class Course(models.Model):
-    """ Course's Model"""
+
+class Activity(models.Model):
+    """ Activities model"""
 
     teacher = models.ForeignKey(Teacher, on_delete='CASCADE')
-    activities = models.ManyToManyField(Activity)
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=30)
+    description = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
