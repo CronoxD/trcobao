@@ -91,10 +91,37 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    border-bottom: 1px solid darkgray;
 }
 
-.content-title .btn-success {
+.m-left {
     margin-left: 25px;
+}
+
+.icons-container {
+    margin-left: 2%;
+    display: inline-block;
+}
+
+.button-delete {
+    color: #F78181;
+    cursor: pointer;
+}
+.button-edit {
+    color: #28a745;
+    cursor: pointer;
+}
+
+.icons-container .button-edit {
+    margin-left: 10px;
+}
+ 
+.input-form {
+    border-radius: 9px;
+    border: 1px solid #ced4da;
+    padding: 8px;
+    font-size: 16px;
+    color: darkslategray;
 }
 
 .card {
