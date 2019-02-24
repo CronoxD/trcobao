@@ -32,7 +32,7 @@ def login_v(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('access_auth:home')
+                return redirect('http://localhost:8080/')
             else:
                 return render(request, 'pages/login.html', {'message' : 'Usuario o contraseña incorrectos'})
         else:

@@ -3,7 +3,6 @@
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 from django.views import View
 
 # Models
@@ -11,9 +10,10 @@ from courses.models import Course
 
 # Utils
 import json
+from utils.responses import sendError, sendResponse
 
 
-class coursesView(View):
+class coursesViewApi(View):
     """ POST method used to save a course """
     
     @method_decorator(login_required)
@@ -26,6 +26,11 @@ class coursesView(View):
 
         newCourse = Course(name=courseName, teacher=request.user.teacher)
         newCourse.save()
+
+        data = {
+            'id': newCourse.id,
+            'name': newCourse.name
+        }
 
         return sendResponse(data=data, message='Grupo agregado', code=201)
     
@@ -44,7 +49,7 @@ class coursesView(View):
 
         return sendResponse(data=resp)
 
-class coursesViewId(View):
+class coursesViewIdApi(View):
 
     @method_decorator(login_required)    
     def delete(self, request, *args, **kwargs):
@@ -59,22 +64,3 @@ class coursesViewId(View):
         courseToDelete.delete()
         
         return sendResponse(data=courseDeleted, message='Curso eliminado' )
-
-def sendResponse(data, message='Success Request', code=200):
-    
-    response = {
-        'data': data,
-        'message': message,
-        'code': code
-    }
-
-    return JsonResponse(response, status=code)
-
-def sendError(message='Failed Request', code=400):
-    
-    response = {
-        'message': message,
-        'code': code
-    }
-
-    return JsonResponse(response, status=code)

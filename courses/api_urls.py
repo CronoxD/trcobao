@@ -3,17 +3,17 @@
 from django.urls import path
 
 # Local
-from courses.views import coursesView, coursesViewId
+from courses.views import coursesViewApi, coursesViewIdApi
 
 urlpatterns = [
     path(
         route='',
-        view=coursesView.as_view(),
+        view=coursesViewApi.as_view(),
         name='get'
     ),
     path(
         route='<int:id>/',
-        view=coursesViewId.as_view(),
+        view=coursesViewIdApi.as_view(),
         name='delete'
     ),
 ]

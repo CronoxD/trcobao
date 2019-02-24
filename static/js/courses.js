@@ -6,38 +6,49 @@ const csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewareto
 const coursesList = document.getElementById('coursesList')
 const courseMessage = document.getElementById('courseMessage');
 const token = csrfmiddlewaretoken.value;
+
+
+function courseItemTemplate(course) {
+    return `<li id="${course.id}" > ${course.name}
+        <div class="icons-container">
+            <i data-course-id="${course.id}" class="far fa-trash-alt button-delete"></i>
+            <i data-course-id="${course.id}" class="far fa-edit button-edit"></i>
+        </div>
+    </li>`;
+}
+
+
+function setEventOnClick() {
+    const buttonDeleteCourse = document.getElementsByClassName('button-delete');
+    const buttonEditCourse = document.getElementsByClassName('button-edit');
+
+    for(let button of buttonDeleteCourse) {
+        button.onclick = deleteCourse;
+    }
+
+    for(let button of buttonEditCourse) {
+        button.onclick = (ev) => console.log('Editar', ev.toElement.getAttribute('data-course-id'));
+    }
+}
+
 /**
- *  Get all teacher's courses
+ *  Get all courses
  */
 function getCourses(){
 
     coursesList.innerHTML = '';
 
-    fetch('/courses/', { headers: {'X-CSRFToken' : token }})
+    fetch('/api/courses/', { headers: {'X-CSRFToken' : token }})
         .then(resp=> resp.json())
         .then(resp => {
 
             const courses = resp.data;
             
             courses.map( course => {
-                coursesList.innerHTML +=
-                    `<li> ${course.name}
-                        <div class="icons-container">
-                            <i data-course-id="${course.id}" class="far fa-trash-alt button-delete"></i>
-                            <i data-course-id="${course.id}" class="far fa-edit button-edit"></i>
-                        </div>
-                    </li>`;
+                coursesList.innerHTML += courseItemTemplate(course);
             });
             // Asignar evento onclic en lo iconos borrar
-            const buttonDeleteCourse = document.getElementsByClassName('button-delete');
-            for(let button of buttonDeleteCourse) {
-                button.onclick = deleteCourse;
-            }
-
-            const buttonEditCourse = document.getElementsByClassName('button-edit');
-            for(let button of buttonEditCourse) {
-                button.onclick = (ev) => console.log('Editar', ev.toElement.getAttribute('data-course-id'));
-            }
+            setEventOnClick();
         });
 }
 getCourses();
@@ -62,7 +73,7 @@ courseForm.onsubmit = (e)=> {
         }
     }
 
-    fetch('/courses/', settings)
+    fetch('/api/courses/', settings)
         .then(resp=> resp.json())
         .then(json => {
             const message = json.message;
@@ -71,8 +82,10 @@ courseForm.onsubmit = (e)=> {
                 courseMessage.style.color = 'red';
             } else {
                 courseMessage.style.color = '#28a745';
+                let course = json.data
+                coursesList.innerHTML += courseItemTemplate(course);
+                setEventOnClick();
             }
-            getCourses();
         })
 }
 
@@ -89,9 +102,10 @@ function deleteCourse(param) {
             'X-CSRFToken' : token
         }
     }
-    fetch(`/courses/${courseId}/`, settings)
+    fetch(`/api/courses/${courseId}/`, settings)
         .then(resp => resp.json())
         .then(response => {
-            getCourses();
+            const item = document.querySelector(`li[id="${courseId}"]`);
+            item.style.display = 'none';
         });
 }
