@@ -18,6 +18,7 @@ class coursesViewApi(View):
     
     @method_decorator(login_required)
     def post(self, request):
+        
         data = json.loads(request.body.decode())
         
         courseName = data['courseName']

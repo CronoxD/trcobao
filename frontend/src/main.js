@@ -4,6 +4,10 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+// Check authenticacion
+import isAuthenticated from './auth_config'
+router.beforeEach(isAuthenticated)
+
 new Vue({
   router,
   render: h => h(App)

@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'students',
     'courses',
     'activities',
+
+    # 3t,
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +57,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'trcobao.urls'
@@ -141,3 +148,11 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_URL = 'access_auth:login'
+
+# CORS
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080',
+)
+
+CORS_ALLOW_CREDENTIALS= True

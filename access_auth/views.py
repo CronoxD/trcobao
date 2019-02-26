@@ -1,6 +1,5 @@
 
 # Django 
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -8,6 +7,26 @@ from django.contrib.auth.decorators import login_required
 
 # Forms
 from access_auth.forms import LoginForm, registerForm
+
+# Utils
+from utils.responses import sendResponse, sendError
+
+def getUserInfo(request):
+    """Return the user's basic information to use in frontend"""
+    print(type(request.user.is_anonymous))
+    if not request.user.is_anonymous:
+
+        data = {
+            'id': request.user.id,
+            'username': request.user.username,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'email': request.user.email,
+        }
+
+        return sendResponse(data, 'Usuario logeado')
+    else:
+        return sendError('Debes estar logeado', 401)
 
 @login_required()
 def home(request):
@@ -32,7 +51,10 @@ def login_v(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('http://localhost:8080/')
+                if user.teacher:
+                    return redirect('http://localhost:8080/maestros')
+                elif user.student:
+                    return redirect('http://localhost:8080/estudiantes')
             else:
                 return render(request, 'pages/login.html', {'message' : 'Usuario o contraseña incorrectos'})
         else:

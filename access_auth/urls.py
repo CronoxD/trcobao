@@ -32,6 +32,11 @@ urlpatterns = [
         route='logout/',
         view=views.logout_v,
         name='logout'
-    )
+    ),
+    path(
+        route='user/',
+        view=views.getUserInfo,
+        name='userInfo'
+    ),
 
 ]

@@ -32,4 +32,38 @@ body {
     color: white;
     text-align: center;
 }
+.content {
+    margin: 106px 8% 0;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: white;
+    margin: 40px 0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.input-form {
+    border-radius: 9px;
+    border: 1px solid #ced4da;
+    padding: 8px;
+    font-size: 16px;
+    color: darkslategray;
+}
+
+.btn-success {
+    border: none;
+    padding: 10px;
+    border-radius: 9px;
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-success:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 </style>

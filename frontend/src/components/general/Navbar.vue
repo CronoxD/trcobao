@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar background-gray">
+<nav class="navbar background-gray">
     <h1 class="navbar-title"> <a href="#"><span>TR</span>COBAO</a></h1>
     <ul class="navbar-list">
         <template v-if="isLogin">
@@ -22,13 +22,29 @@ export default {
     name: 'navbar',
     data() {
         return {
-            isLogin: true,
+            isLogin: false,
             urlLogout: 'http://localhost:8000/logout',
             urlLogin: 'http://localhost:8000/ingresar',
             urlSignin: 'http://localhost:8000/registrarse',
-            user: {
-                first_name: 'Emmnauel Fake'
-            }
+            user: {}
+        }
+    },
+    mounted: function() {
+        this.getUserInfo()
+    },
+    methods: {
+        getUserInfo: function() {
+            fetch('http://localhost:8000/user/', { credentials: 'include'})
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.code == 200) {
+                        console.log(data)
+                        this.user = data.data
+                        this.isLogin = true
+                    } else {
+                        window.location.href= 'http://localhost:8000/ingresar/'
+                    }
+                })
         }
     }
 }
