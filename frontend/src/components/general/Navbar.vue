@@ -18,14 +18,17 @@
 </template>
 
 <script>
+
+import { URL_BACK } from '../../utils'
+
 export default {
     name: 'navbar',
     data() {
         return {
             isLogin: false,
-            urlLogout: 'http://localhost:8000/logout',
-            urlLogin: 'http://localhost:8000/ingresar',
-            urlSignin: 'http://localhost:8000/registrarse',
+            urlLogout: URL_BACK + 'logout/',
+            urlLogin: URL_BACK + 'ingresar/',
+            urlSignin: URL_BACK + 'registrarse/',
             user: {}
         }
     },
@@ -34,15 +37,14 @@ export default {
     },
     methods: {
         getUserInfo: function() {
-            fetch('http://localhost:8000/user/', { credentials: 'include'})
+            fetch(URL_BACK + 'user/', { credentials: 'include'})
                 .then(resp => resp.json())
                 .then(data => {
                     if (data.code == 200) {
-                        console.log(data)
                         this.user = data.data
                         this.isLogin = true
                     } else {
-                        window.location.href= 'http://localhost:8000/ingresar/'
+                        window.location.href= URL_BACK + 'ingresar/'
                     }
                 })
         }

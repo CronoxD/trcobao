@@ -1,2 +1,4 @@
 Django==2.1.5
+django-cors-headers==2.4.0
 Pillow==5.4.1
+mysqlclient==1.4.2.post1

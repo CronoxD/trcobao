@@ -9,6 +9,9 @@
 </template>
 
 <script>
+
+import { URL_API } from '../../utils'
+
 export default {
     name: 'formGroup',
     data() {
@@ -18,7 +21,6 @@ export default {
     },
     methods: {
         _handleSubmit: function() {
-            const API_URL = 'http://localhost:8000/api/';
 
             const payload = {
                 courseName: this.courseName
@@ -29,11 +31,11 @@ export default {
                 body: JSON.stringify(payload),
                 credentials: 'include',
                 headers: {
-                    'X-CSRFToken' : 'GySrL3P1pbRxamJRUpnr5C4jid1b4NNEU3Lcj7BhC9VDcJTl1BjnTd9YeLWqWhog'
+                    'X-CSRFToken' : 'FIFWvegyF6u5kpwhhlROKGIk6RTffbTv9ggYeQXJV29YP7OiL9bGPlvpws41pysj'
                 }
             }
 
-            fetch(API_URL+'courses/', settings)
+            fetch(URL_API+'courses/', settings)
                 .then(resp=> resp.json())
                 .then(json => {
                     console.log(json)

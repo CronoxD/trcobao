@@ -26,6 +26,13 @@ export default new Router({
       meta: { 
         requiresAuth: true
       }
+    },
+    {
+      path: '/',
+      name: 'root',
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })

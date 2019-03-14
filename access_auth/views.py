@@ -24,6 +24,11 @@ def getUserInfo(request):
             'email': request.user.email,
         }
 
+        if hasattr(request.user, 'teacher'):
+            data['type'] = 'teacher'
+        else:
+            data['type'] = 'student'
+ 
         return sendResponse(data, 'Usuario logeado')
     else:
         return sendError('Debes estar logeado', 401)

@@ -7,8 +7,7 @@
 <script>
 
 import CardTeacher from '../components/teachers/CardTeacher.vue'
-
-const API_URL = 'http://localhost:8000/api/';
+import { URL_API } from '../utils';
 
 export default {
     name :'HomeTeachers',
@@ -20,7 +19,7 @@ export default {
     components: { CardTeacher },
     methods: {
         getGroups: function() {
-            fetch(API_URL+'courses/', { credentials: 'include'})
+            fetch(URL_API+'courses/', { credentials: 'include'})
                 .then(resp => resp.json())
                 .then(data => this.groups = data.data)
         }
