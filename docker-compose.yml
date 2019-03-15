@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Secret_admin@2019'
+      MYSQL_DATABASE: 'trcobao'
+      MYSQL_USER: 'octavio'
+      MYSQL_PASSWORD: 'secret@2019'
+    volumes:
+      - db-trcobao:/var/lib/mysql
+  backend:
+    build:
+      context: .
+      dockerfile: ./compose/backend/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  db-trcobao:

@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'trcobao.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST' : 'localhost',
+        'HOST' : 'db',
         'USER' : 'octavio',
         'PASSWORD': 'secret@2019',
         'NAME' : 'trcobao',
@@ -101,7 +101,6 @@ DATABASES = {
         },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "check database"
+status=$(netcat -z db 3306; echo $?)
+
+while [ $status != 0 ]
+do
+    sleep 2s
+    status=$(netcat -z db 3306; echo $?)
+    echo $status
+done
+
+python manage.py migrate
+
+exec "$@"
