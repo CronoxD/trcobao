@@ -17,7 +17,7 @@ function getToken() {
 
 
 const URL_API = 'http://localhost:8000/api/';
-const URL_BACK = 'http://localhost:8000/'
+const URL_BACK = 'http://localhost:8000/auth/'
 
 
 export {

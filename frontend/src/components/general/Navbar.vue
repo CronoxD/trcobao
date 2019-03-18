@@ -58,6 +58,7 @@ export default {
     width: 100%;
     z-index: 100;
     top: 0;
+    height: 57px;
 }
 .navbar-title {
     display: inline-block;

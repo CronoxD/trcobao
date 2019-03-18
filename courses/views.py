@@ -25,6 +25,9 @@ class coursesViewApi(View):
         if courseName == '':
             return sendError(message='Tienes que agregar un curso')
 
+        if len(courseName) > 100:
+            return sendError(message='El nombre del curso es demasiado grande')
+
         newCourse = Course(name=courseName, teacher=request.user.teacher)
         newCourse.save()
 

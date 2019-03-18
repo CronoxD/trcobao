@@ -3,20 +3,32 @@
 
         <label for="groupName">Nombre del grupo</label>
         <input v-model="courseName" class="input-form" type="text" id="groupName">
+        <p v-bind:class="{ messageError: error, messageSuccess: !error }">{{ message }}</p>
 
-        <input class="btn-success" type="submit" value="Enviar">
+        <div class="btn-container">
+            <button-back></button-back>
+            <input class="btn-success" type="submit" value="Enviar">
+        </div>
     </form>
 </template>
 
 <script>
 
 import { URL_API } from '../../utils'
+import { getToken } from '../../utils'
+import ButtonBack from '../general/ButtonBack.vue'
 
 export default {
     name: 'formGroup',
+    components: {
+        ButtonBack
+    },
     data() {
         return {
-            courseName: ''
+            courseName: '',
+            token: '',
+            message: null,
+            error: false
         }
     },
     methods: {
@@ -31,16 +43,24 @@ export default {
                 body: JSON.stringify(payload),
                 credentials: 'include',
                 headers: {
-                    'X-CSRFToken' : 'FIFWvegyF6u5kpwhhlROKGIk6RTffbTv9ggYeQXJV29YP7OiL9bGPlvpws41pysj'
+                    'X-CSRFToken' : this.token
                 }
             }
 
             fetch(URL_API+'courses/', settings)
                 .then(resp=> resp.json())
                 .then(json => {
-                    console.log(json)
+                    this.message = json.message
+                    if( json.code != 201 ) {
+                        this.error = true
+                    } else {
+                        this.error = false
+                    }
                 })
         }
+    },
+    mounted: function() {
+        this.token = getToken()
     }
 }
 </script>
@@ -55,5 +75,10 @@ export default {
         margin: 10px;
         font-size: 18px;
     }
-
+    .messageError {
+        color: rgb(228, 70, 70);
+    }
+    .messageSuccess {
+        color: rgb(69, 192, 69);
+    }
 </style>

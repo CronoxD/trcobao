@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+  # nginx:
+  #   build:
+  #       context: .
+  #       dockerfile: ./compose/server/Dockerfile
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - frontend
+  #     - backend
   db:
     image: mariadb
     restart: always
@@ -18,10 +27,20 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
-    ports:
-      - "8000:8000"
     depends_on:
       - db
-
+    ports:
+      - "8000:8000"
+  frontend:
+    build:
+      context: .
+      dockerfile: ./compose/frontend/Dockerfile
+    command: npm run serve
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+    ports:
+      - 8080:8080
 volumes:
   db-trcobao:
