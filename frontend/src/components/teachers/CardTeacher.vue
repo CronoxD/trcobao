@@ -10,22 +10,86 @@
 
         <div class="content-body">
             <ul>
-                <li v-for="item in items" :key="item.id"> 
+                <li v-for="item in items" :key="item.id" :id="item.id"> 
                     {{ item.name }}
                     <div class="icons-container">
-                        <i class="far fa-trash-alt button-delete"></i>
+                        <i v-on:click="showModal(item.id, item.name)" class="far fa-trash-alt button-delete"></i>
                         <i class="far fa-edit button-edit"></i>
                     </div>
                 </li>
             </ul>
         </div>
+        <modal-delete
+            :isShowModal="showModalDelete.status"
+            :itemToDelete="showModalDelete.name"
+            :itemId="showModalDelete.id"
+            v-on:onClickModal="responseModal">
+        </modal-delete>
     </section>
 </template>
 
 <script>
+
+import { getToken } from '../../utils'
+import { URL_API } from '../../utils'
+import ModalDelete from '../general/ModalDelete.vue'
+
 export default {
     name: 'cardTeacher',
-    props: [ 'title', 'items']
+    props: [ 'title', 'items'],
+    components: {
+        ModalDelete
+    },
+    data () {
+        return {
+            token: '',
+            showModalDelete: {
+                status: false,
+                name: '',
+                id: null
+            }
+        }
+    },
+    methods: {
+        showModal: function (itemId, itemName) {
+
+            this.showModalDelete = {
+                status: true,
+                name: itemName,
+                id: itemId
+            }
+            
+
+        },
+        responseModal(resp) {
+            this.showModalDelete.status = false
+            
+            console.log(resp.resp)
+            if (resp.resp) {
+                const settings = {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'X-CSRFToken': this.token
+                    }
+                }
+
+                fetch(URL_API+`courses/${resp.itemId}/`, settings)
+                    .then(resp => resp.json())
+                    .then(data => {
+                        if (data.code == 200) {
+                            document.getElementById(resp.itemId).style.display = 'none'
+                        }
+                    })
+            }
+        }
+    },
+    mounted: function () {
+        this.token = getToken()
+        this.$once('onClickModal', function() {
+                console.log('ocurrio algo')
+            })
+    }
 }
 </script>
 

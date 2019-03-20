@@ -36,7 +36,7 @@ class coursesViewApi(View):
             'name': newCourse.name
         }
 
-        return sendResponse(data=data, message='Grupo agregado', code=201)
+        return sendResponse(data=data, message='Grupo {} agregado'.format(data['name']), code=201)
     
     
     @method_decorator(login_required)    
@@ -58,8 +58,8 @@ class coursesViewIdApi(View):
     @method_decorator(login_required)    
     def delete(self, request, *args, **kwargs):
 
-        courseToDelete = Course.objects.get(id=kwargs['id'])
-
+        courseToDelete = Course.objects.get(id=kwargs['id'], teacher=request.user.teacher)
+        print(courseToDelete)
         courseDeleted = {
             'id': courseToDelete.id,
             'name': courseToDelete.name

@@ -53,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
+a {
+    height: 15px;
+}
 .navbar {
     position: fixed;
     width: 100%;
