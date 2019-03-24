@@ -14,8 +14,23 @@ from utils.responses import sendError, sendResponse
 
 
 class coursesViewApi(View):
-    """ POST method used to save a course """
+
+    @method_decorator(login_required)    
+    def get(self, request):
+        
+        courses = Course.objects.filter(teacher=request.user.teacher)
+        resp = []
+        for course in courses:
+            element = {
+                'id': course.id,
+                'name': course.name
+            }
+            resp.append(element)
+
+        return sendResponse(data=resp)
     
+
+    """ POST method used to save a course """
     @method_decorator(login_required)
     def post(self, request):
         
@@ -37,21 +52,6 @@ class coursesViewApi(View):
         }
 
         return sendResponse(data=data, message='Grupo {} agregado'.format(data['name']), code=201)
-    
-    
-    @method_decorator(login_required)    
-    def get(self, request):
-        
-        courses = Course.objects.filter(teacher=request.user.teacher)
-        resp = []
-        for course in courses:
-            element = {
-                'id': course.id,
-                'name': course.name
-            }
-            resp.append(element)
-
-        return sendResponse(data=resp)
 
 class coursesViewIdApi(View):
 

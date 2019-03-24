@@ -3,7 +3,7 @@
         <div class="content-title">
             <h2 class="subtitle">{{ title }}</h2>
 
-            <router-link :to="'grupos'" class="btn-success m-left" >AGREGAR</router-link>
+            <router-link :to="toLinkAdd" class="btn-success m-left" >AGREGAR</router-link>
             
             <p class="m-left"></p>
         </div>
@@ -36,7 +36,7 @@ import ModalDelete from '../general/ModalDelete.vue'
 
 export default {
     name: 'cardTeacher',
-    props: [ 'title', 'items'],
+    props: [ 'title', 'items', 'toLinkAdd'],
     components: {
         ModalDelete
     },
@@ -63,8 +63,6 @@ export default {
         },
         responseModal(resp) {
             this.showModalDelete.status = false
-            
-            console.log(resp.resp)
             if (resp.resp) {
                 const settings = {
                     method: 'DELETE',
@@ -74,7 +72,7 @@ export default {
                     }
                 }
 
-                fetch(URL_API+`courses/${resp.itemId}/`, settings)
+                fetch(URL_API+`${this.toLinkAdd}/${resp.itemId}/`, settings)
                     .then(resp => resp.json())
                     .then(data => {
                         if (data.code == 200) {
@@ -86,9 +84,6 @@ export default {
     },
     mounted: function () {
         this.token = getToken()
-        this.$once('onClickModal', function() {
-                console.log('ocurrio algo')
-            })
     }
 }
 </script>
