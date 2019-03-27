@@ -4,8 +4,8 @@
             <i class="fas fa-exclamation"></i>
             <h3>¿Estas seguro que quieres eliminar {{itemToDelete}}?</h3>
             <div class="modal-buttons">
-                <i class="fas fa-check option" v-on:click="sendResponse({resp: true, itemId})"></i>
                 <i class="fas fa-times option" v-on:click="sendResponse({resp: false, itemId})"></i>
+                <i class="fas fa-check option" v-on:click="sendResponse({resp: true, itemId})"></i>
             </div>
         </div>
         

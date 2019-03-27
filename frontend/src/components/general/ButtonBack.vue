@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'maestros'" class="btn-back" >Regresar</router-link>
+    <router-link :to="'/maestros'" class="btn-back" >Regresar</router-link>
 </template>
 
 <script>

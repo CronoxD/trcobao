@@ -52,7 +52,18 @@ body {
     color: darkslategray;
 }
 
-.btn-success {
+.btnPrimary {
+    border: none;
+    padding: 10px;
+    border-radius: 9px;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btnSuccess {
     border: none;
     padding: 10px;
     border-radius: 9px;
@@ -63,7 +74,7 @@ body {
     text-decoration: none;
 }
 
-.btn-success:hover {
+.btnSuccess:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 

@@ -2,9 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Local
-import HomeTeachers from './views/HomeTeachers.vue'
-import HomeGroup from './views/HomeGroup.vue'
-import HomeActivity from './views/HomeActivity.vue'
+
+// Routes
+import groupRoutes from './routes/groups'
+import activitiesRoutes from './routes/activities'
+import teacherRoutes from './routes/teachers'
 
 Vue.use(Router)
 
@@ -12,30 +14,9 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/grupos',
-      name: 'groups',
-      component: HomeGroup,
-      meta: { 
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/actividades',
-      name: 'activities',
-      component: HomeActivity,
-      meta: { 
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/maestros',
-      name: 'teachers',
-      component: HomeTeachers,
-      meta: { 
-        requiresAuth: true
-      }
-    },
+    groupRoutes,
+    activitiesRoutes,
+    teacherRoutes,
     {
       path: '/',
       name: 'root',

@@ -1,84 +1,89 @@
-<template>
-    <form @submit.prevent="_handleSubmit" class="card center-flex">
-
-        <label for="groupName">Nombre del grupo</label>
-        <input v-model="courseName" class="input-form" type="text" id="groupName">
-        <p v-bind:class="{ messageError: error, messageSuccess: !error }">{{ message }}</p>
-
-        <div class="btn-container">
-            <button-back></button-back>
-            <input class="btn-success" type="submit" value="Enviar">
-        </div>
-    </form>
+<template lang="pug">
+	form.card.center-flex(@submit.prevent='_handleSubmit')
+		label(for='groupName') Nombre del grupo
+		input#groupName.input-form(v-model='courseName', type='text')
+		p(v-bind:class='{ messageError: error, messageSuccess: !error }') {{ message }}
+		.btn-container
+			button-back
+			input(:class='{btnPrimary : courseId, btnSuccess : !courseId}', type='submit', :value='valueBtn')
 </template>
 
 <script>
-
-import { URL_API } from '../../utils'
-import { getToken } from '../../utils'
-import ButtonBack from '../general/ButtonBack.vue'
+import Service from "../../utils/services";
+import ButtonBack from "../general/ButtonBack.vue";
 
 export default {
-    name: 'formGroup',
-    components: {
-        ButtonBack
+  name: "formGroup",
+  components: {
+    ButtonBack
+  },
+  data() {
+    return {
+      courseName: "",
+      courseId: undefined,
+      service: null,
+      message: null,
+      error: false,
+      valueBtn: "Enviar"
+    };
+  },
+  methods: {
+    _handleSubmit() {
+      // if there is an ID UPDATE the current course's Data.
+      if (this.courseId !== undefined) {
+        //UPDATE the current course's data
+        this.service.put(`courses/${this.courseId}/`, {courseName: this.courseName})
+					.then(this.setResp);
+      } else {
+        this.service.post('courses/', {courseName: this.courseName})
+					.then(this.setResp);
+      }
     },
-    data() {
-        return {
-            courseName: '',
-            token: '',
-            message: null,
-            error: false
-        }
-    },
-    methods: {
-        _handleSubmit: function() {
+    setResp(resp) {
+      this.message = resp.message;
 
-            const payload = {
-                courseName: this.courseName
-            }
-
-            const settings = {
-                method: 'POST',
-                body: JSON.stringify(payload),
-                credentials: 'include',
-                headers: {
-                    'X-CSRFToken' : this.token
-                }
-            }
-
-            fetch(URL_API+'courses/', settings)
-                .then(resp=> resp.json())
-                .then(json => {
-                    this.message = json.message
-                    if( json.code != 201 ) {
-                        this.error = true
-                    } else {
-                        this.error = false
-                    }
-                })
-        }
-    },
-    mounted: function() {
-        this.token = getToken()
+      if (resp.code != 201) {
+        this.error = true;
+      } else {
+        this.error = false;
+        this.courseName = "";
+      }
     }
-}
+  },
+  mounted: function() {
+    this.courseId = this.$route.params.id;
+
+    this.service = new Service();
+    // if there is an ID get the course's Data.
+    if (this.courseId !== undefined) {
+      //Get the course data
+      this.service
+        .get(`courses/${this.courseId}/`)
+        .then(res => {
+          this.courseName = res.data.name;
+          this.valueBtn = "Editar";
+        })
+        .catch(() => this.$router.go(-1));
+    }
+  }
+};
 </script>
 
 <style scoped>
-    .center-flex {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .center-flex label, .center-flex input {
-        margin: 10px;
-        font-size: 18px;
-    }
-    .messageError {
-        color: rgb(228, 70, 70);
-    }
-    .messageSuccess {
-        color: rgb(69, 192, 69);
-    }
+.center-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.center-flex label,
+.center-flex input {
+  margin: 10px;
+  font-size: 18px;
+}
+.messageError {
+  color: rgb(228, 70, 70);
+}
+.messageSuccess {
+  color: rgb(69, 192, 69);
+}
 </style>

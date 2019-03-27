@@ -14,6 +14,5 @@ urlpatterns = [
     path(
         route='<int:id>/',
         view=coursesViewIdApi.as_view(),
-        name='delete'
     ),
 ]

@@ -9,7 +9,7 @@ function isAuthenticated(to, from, next) {
             .then(json => {
                 if(json.code == 200) {
                     if(json.data.type == 'teacher' && to.name === 'root') {
-                        next('/maestros')
+                        next({name: 'teachers'})
                     }
                     else {
                         next()
