@@ -1,7 +1,7 @@
 # Trcobao
 Sistema para administrar las actividades que un profesor le deja a sus alumnos
 
-Un profesor puede agregar grupos y actividades, cada grupo tiene una contraseña la cual el profesor debe compartir a sus alumnos para que estos puedan integrarse.
+Un profesor puede agregar grupos y actividades, se pretende que cada grupo tenga una contraseña la cual el profesor debe compartir a sus alumnos para que estos puedan integrarse.
 
 ## Requisitos
   1. Docker
