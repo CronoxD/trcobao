@@ -26,6 +26,8 @@ class activitiesViewApi(View):
 
         return sendResponse(data=resp)
 
+
+    @method_decorator(login_required)
     def post(self, request):
         data = json.loads(request.body.decode())
         
@@ -58,6 +60,21 @@ class activitiesViewApi(View):
 
 
 class activitiesViewIdApi(View):
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+
+        try:
+            activity = Activity.objects.get(id=kwargs['id'], teacher=request.user.teacher) 
+        except expression as identifier:
+            return sendError(message='La actividad no existe para este profesor', code=404)            
+
+        activityData = {
+            'id' : activity.id,
+            'name' : activity.name
+        }
+
+        return sendResponse(data=activityData, message='Actividad eliminada')
     
     @method_decorator(login_required)
     def delete(self, request, *args, **kwargs):
@@ -71,3 +88,32 @@ class activitiesViewIdApi(View):
         activityToDelete.delete()
 
         return sendResponse(data=activityDeleted, message='Actividad eliminada')
+    
+    
+    @method_decorator(login_required)
+    def put(self, request, *args, **kwargs):
+
+        data = json.loads(request.body.decode())
+        
+        activityName = data['activityName']
+        if activityName == '':
+            return sendError(message='Tienes que asignarle un nombre a la actividad')
+
+        if len(activityName) > 100:
+            return sendError(message='El nombre de la activdad es demasiado grande')
+
+        try:
+            activity = Activity.objects.get(id=kwargs['id'], teacher=request.user.teacher)
+        except Activity.DoesNotExist:
+            return sendError(message='La actividad no existe para este profesor', code=404)
+        
+        # Uptade course's data
+        activity.name = activityName
+        activity.save()
+
+        activityData = {
+            'id': activity.id,
+            'name': activity.name
+        }
+        
+        return sendResponse(data=activityData, message='Actividad editada correctamente' )

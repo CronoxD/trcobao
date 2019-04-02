@@ -6,7 +6,16 @@ const activitiesRoutes = {
     component: HomeActivity,
     meta: { 
         requiresAuth: true
-    }
+    },
+    children: [
+        {
+            path: ':id',
+            component: HomeActivity,
+            meta: {
+                requiresAuth: true
+            }
+        }
+    ]
 }
 
 export default activitiesRoutes

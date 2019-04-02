@@ -8,30 +8,30 @@
 <script>
 
 import CardTeacher from '../components/teachers/CardTeacher.vue'
-import { URL_API } from '../utils';
+import Service from '../utils/services';
 
 export default {
     name :'HomeTeachers',
     data () {
         return {
             groups: [],
-            activities: []
+            activities: [],
+            service: null
         }
     },
     components: { CardTeacher },
     methods: {
         getGroups: function() {
-            fetch(URL_API+'courses/', { credentials: 'include'})
-                .then(resp => resp.json())
+            this.service.get('courses/')
                 .then(data => this.groups = data.data)
         },
         getActivities: function() {
-            fetch(URL_API+'activities/', { credentials: 'include'})
-                .then(resp => resp.json())
+            this.service.get('activities/')
                 .then(data => this.activities = data.data)
         }
     },
     mounted: function() {
+        this.service = new Service()
         this.getGroups()
         this.getActivities()
     }
