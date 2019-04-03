@@ -39,7 +39,7 @@ body {
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background: white;
-    margin: 40px 0;
+    margin: 20px 0;
     padding: 20px;
     border-radius: 8px;
 }

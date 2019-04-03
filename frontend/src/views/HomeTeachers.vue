@@ -1,62 +1,37 @@
 <template lang="pug">
 div.mainContent
-	aside.navAdmin
-		search-form.searchBox
-		router-link.itemButton(:to="'/maestros/user'") Mi perfil
-			i.fas.fa-user.mLeft
-		router-link.itemButton(:to="'/maestros/dashboard'") Dashboard
-			i.fas.fa-tachometer-alt.mLeft
-		router-link.itemButton(:to="'/maestros/grupos'") Grupos
-			i.fas.fa-users.mLeft
-		router-link.itemButton(:to="'/maestros/actividades'") Actividades
-			i.fas.fa-book-open.mLeft
-		router-link.itemButton(:to="'/maestros/reportes'") Reportes
-			i.fas.fa-file-invoice.mLeft
+	aside-nav
 	.content
 			transition(name="fade", mode="out-in")
-				cardTeacher(
+				view-groups(
 					key="groups",
-					v-if="elementRoute=='grupos'",
-					:title="'Grupos'", :items="groups",
-					:toLinkAdd="'grupos'"
+					v-if="elementRoute=='grupos'"
 				)
-				cardTeacher(
+				view-activities(
 					key="activities"
 					v-if="elementRoute=='actividades'",
-					:title="'Actividades'",
-					:items="activities",
-					:toLinkAdd="'actividades'"
 				)
 </template>
 
 <script>
-import CardTeacher from "../components/teachers/CardTeacher.vue";
-import SearchForm from '../components/general/SearchForm.vue';
-import Service from "../utils/services";
+// Views
+import ViewGroups from '../components/groups/ViewGroups.vue';
+import ViewActivities from '../components/activities/ViewActivities.vue';
+
+// Aside Nav
+import AsideNav from '../components/general/AsideNav.vue';
 
 export default {
   name: "HomeTeachers",
   data() {
     return {
-      groups: [],
-      activities: [],
-			service: null,
 			elementRoute: 'groups' //default groups
     };
   },
   components: {
-		CardTeacher,
-		SearchForm
-	},
-  methods: {
-    getGroups: function() {
-      this.service.get("courses/").then(data => (this.groups = data.data));
-    },
-    getActivities: function() {
-      this.service
-        .get("activities/")
-        .then(data => (this.activities = data.data));
-    }
+		ViewGroups,
+		ViewActivities,
+		AsideNav
 	},
 	watch: {
 		'$route' (to, from) {
@@ -65,9 +40,6 @@ export default {
 	},
   mounted: function() {
 		this.elementRoute = this.$route.params.element
-    this.service = new Service();
-    this.getGroups();
-    this.getActivities();
   }
 };
 </script>
@@ -97,31 +69,5 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-	}
-	.navAdmin {
-		background: #0B0B3B;
-	}
-	.searchBox {
-		margin: 10px;
-	}
-	.itemsContent {
-		margin: 0 10px;
-	}
-	.itemButton {
-		display: block;
-		color: white;
-		font-size: 25px;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-		transition: background-color 0.6s ease;
-		text-align: center;
-		text-decoration: none;
-		line-height: 65px;
-	}
-
-	.itemButton:hover {
-		background-color: rgba(255, 255, 255, 0.2);
-	}
-	.mLeft {
-		margin-left: 10px;
 	}
 </style>
