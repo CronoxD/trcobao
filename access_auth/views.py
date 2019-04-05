@@ -13,7 +13,7 @@ from utils.responses import sendResponse, sendError
 
 def getUserInfo(request):
     """Return the user's basic information to use in frontend"""
-    print(type(request.user.is_anonymous))
+    
     if not request.user.is_anonymous:
 
         data = {
@@ -57,7 +57,7 @@ def login_v(request):
             if user is not None:
                 login(request, user)
                 if user.teacher:
-                    return redirect('http://localhost:8080/maestros')
+                    return redirect('http://localhost:8080/maestros/grupos')
                 elif user.student:
                     return redirect('http://localhost:8080/estudiantes')
             else:

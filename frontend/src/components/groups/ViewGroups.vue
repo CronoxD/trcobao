@@ -1,41 +1,32 @@
 <template lang="pug">
-	div
-		cardTeacher(
-			:title="'Grupos'",
-			:items="groups",
-			:toLinkAdd="'grupos'"
-		)
-		FormGroup
+	.content-view-groups
+		.tmp-students.card
+		items-list
 </template>
 
 <script>
-import FormGroup from "./FormGroup.vue";
-import CardTeacher from "../teachers/CardTeacher.vue";
+
+// Utils
 import Service from "../../utils/services";
+// Components
+import ItemsList from '../general/ItemsList.vue'
 
 export default {
 	name: "view-groups",
-	data() {
-		return {
-			groups: [],
-			service: null
-		}
-	},
   components: {
-		FormGroup,
-		CardTeacher
-	},
-	methods: {
-		getGroups: function() {
-			this.service.get("courses/").then(data => (this.groups = data.data));
-		}
-	},
-	mounted: function() {
-		this.service = new Service();
-    this.getGroups();
+		ItemsList
 	}
 };
 </script>
 
 <style scoped>
+	.content-view-groups {
+		display: grid;
+		grid-template-columns: repeat(3,1fr);
+		grid-template-rows: repeat(3, 1fr);
+		grid-column-gap: 10px;
+	}
+	.tmp-students {
+		grid-column: 2 span;
+	}
 </style>

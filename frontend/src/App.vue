@@ -33,7 +33,7 @@ body {
     text-align: center;
 }
 .content {
-    margin: 0 3% 0;
+    margin: 0 1% 0;
 }
 
 .card {

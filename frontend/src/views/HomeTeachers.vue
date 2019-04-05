@@ -4,11 +4,9 @@ div.mainContent
 	.content
 			transition(name="fade", mode="out-in")
 				view-groups(
-					key="groups",
 					v-if="elementRoute=='grupos'"
 				)
 				view-activities(
-					key="activities"
 					v-if="elementRoute=='actividades'",
 				)
 </template>
