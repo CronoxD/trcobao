@@ -63,7 +63,7 @@ export default {
           this.courseName = res.data.name;
           this.valueBtn = "Editar";
         })
-        .catch(() => this.$router.go(-1));
+        .catch(() => {this.$router.go(-1); this.courseId=undefined});
     }
   }
 };

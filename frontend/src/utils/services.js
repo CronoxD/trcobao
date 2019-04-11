@@ -20,7 +20,7 @@ class Service {
 		return fetch(this.url + path, { credentials: 'include' })
 			.then(resp => resp.json())
 			.then(res => res)
-			.catch(() => 'No existe el elemeno')
+			.catch(() => 'No existe el elemento')
 	}
 
 	post(path, payload) {

@@ -2,7 +2,7 @@
 import HomeTeachers from '../views/HomeTeachers.vue'
 
 const teacherRoutes = {
-    path: '/maestros',
+    path: '/maestros/:element',
     name: 'teachers',
     component: HomeTeachers,
     meta: { 
