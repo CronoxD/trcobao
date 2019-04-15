@@ -116,3 +116,30 @@ class coursesViewIdApi(View):
         }
         
         return sendResponse(data=courseData, message='Curso editado correctamente' )
+
+class coursesStudentsViewIdApi(View):
+    
+    """Get the courses's students"""
+    def get(self, request, *args, **kwargs):
+        
+        try:
+            course = Course.objects.get(id=kwargs['id'], teacher=request.user.teacher)
+        except Course.DoesNotExist:
+            return sendError(message='El curso no existe para este profesor', code=404)
+        
+        qStudents = course.students.all()
+
+        students = []
+        for student in qStudents:
+            element = {
+                'id': student.id,
+                'status': student.status,
+                'first_name': student.user.first_name,
+                'last_name': student.user.last_name,
+                'username': student.user.username,
+                'email': student.user.email,
+                'government_id': student.government_id,
+            }
+            students.append(element)
+
+        return sendResponse(data=students, message='Alumnos en el curso {}'.format(course.name))

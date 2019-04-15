@@ -1,6 +1,6 @@
 <template lang="pug">
 	.card.list-content
-		h1 Grupos
+		h1 {{ title }}
 		search-form(@search="search")
 		transition-group(
 			name="staggered-fade",
@@ -10,22 +10,19 @@
 			v-on:enter="enter",
 			v-on:leave="leave"
 		)
-			li(v-for='(item, index) in computedItems', :key='item.id', :data-index='index')
+			li(v-for='(item, index) in computedItems', :key='item.id', :data-index='index', @click="itemClick(item.id)")
 				| {{item.name}}
 </template>
 
 <script>
 // Components
 import SearchForm from "../general/SearchForm.vue";
-//Utils
-import Service from "../../utils/services";
 
 export default {
   name: "items-list",
+  props: ['title', 'items'],
   data() {
     return {
-      items: [],
-      service: undefined,
       toSearch: ""
     };
   },
@@ -35,6 +32,9 @@ export default {
   methods: {
     search(e) {
       this.toSearch = e;
+    },
+    itemClick(id) {
+      this.$emit('itemClick', id)
     },
     beforeEnter: function(el) {
       el.style.opacity = 0;
@@ -60,10 +60,6 @@ export default {
         return item.name.toLowerCase().indexOf(_this.toSearch.toLowerCase()) !== -1
       })
     }
-  },
-  mounted: function() {
-    this.service = new Service();
-    this.service.get("courses/").then(resp => (this.items = resp.data));
   }
 };
 </script>
@@ -72,6 +68,9 @@ export default {
 .list-content {
   min-height: 300px;
 }
+ul li {
+  cursor: pointer;
+}
 h1 {
   margin: 0 0 10px 0;
   text-align: center;
@@ -79,9 +78,4 @@ h1 {
   color: #0b0b3b;
 }
 
-/* Items list Animations */
-.show-enter-active,
-.fade-leave-active {
-  transition: transform 1s;
-}
 </style>

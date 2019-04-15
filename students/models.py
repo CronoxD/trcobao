@@ -15,7 +15,7 @@ class Student(models.Model):
 
     STATUS_CHOICES = (
         (ACTI, 'Activo'),
-        (IRRE, 'Irrgular'),
+        (IRRE, 'Irregular'),
         (BAJ, 'Baja'),
     )
 
